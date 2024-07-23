@@ -88,7 +88,8 @@ const Userlogin = ( ) =>{
     </div>
     <div>
         <br />
-        <Link to={'/navbar2'}><Button sx={{backgroundColor: "sandybrown"}} variant='contained' onClick={valueAdd}>LogIn</Button></Link>
+        <Link to={'/home'}><Button sx={{backgroundColor: "sandybrown"}} variant='contained' onClick={valueAdd}>LogIn</Button></Link>
+        <Link to={'/userlist'}><h4>Admin Page</h4></Link>
     </div>
     </Box>
     </Box>

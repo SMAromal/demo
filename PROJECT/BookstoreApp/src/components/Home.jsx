@@ -40,7 +40,7 @@ const Home = () => {
             <Link to={`/book/${book.id}`} className="card-link">
               <img src={book.image_url} alt={book.title} className="card-img" />
               <div className="card-body">
-                <h3 className="card-title">{book.title}</h3>
+                <Link to={'/indi'}><h3 className="card-title">{book.title}</h3></Link>
               </div>
             </Link>
           </div>

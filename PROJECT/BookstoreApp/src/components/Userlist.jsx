@@ -1,24 +1,39 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Box,Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button } from '@mui/material';
+import {useNavigate} from 'react-router-dom'
 
 const Userlist = () => {
-  const [rows, setRows] = useState([]);
 
-  useEffect(() => {
-    axios.get('https://jsonplaceholder.typicode.com/users')
-      .then(res => {
-        setRows(res.data);
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
-  }, []);
+  const[users,setUsers]=useState([])
+    var navigate=useNavigate()
+        useEffect(()=>{
+          axios.get('http://localhost:4000/users').then((res)=>{
+              console.log(res)
+              setUsers(res.data)
+          })
+        },[]);
 
-//   const removeItem = (id) => {
-//     const updatedRows = rows.filter(row => row.id !== id);
-//     setRows(updatedRows);
-//   };
+        function deleteData(_id){
+          axios.delete("http://localhost:4000/moviedel/"+_id).then((res)=>{
+            alert('Data deleted')
+            // to automatically reload site
+            window.location.reload()
+          }).catch((error)=>{
+            console.log(error)
+          })
+        }
+
+        function deleteData(_id){
+          axios.delete("http://localhost:4000/moviedel/"+_id).then((res)=>{
+            alert('Data deleted')
+            // to automatically reload site
+            window.location.reload()
+          }).catch((error)=>{
+            console.log(error)
+          })
+        }
+
 <h1 style={{color:'black',fontFamily: 'Lobster'}}>User List</h1>
   return (
     
@@ -47,15 +62,15 @@ const Userlist = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <TableRow key={row.id}>
+            {users.map((user) => (
+              <TableRow key={user.id}>
                 <TableCell component="th" scope="row">
-                  {row.name}
+                  {user.Name}
                 </TableCell>
-                <TableCell align="center">{row.email}</TableCell>
+                <TableCell align="center">{user.Email}</TableCell>
                 <TableCell align="center">
                   {/* <Button variant="contained" color="secondary" onClick={() => removeItem(row.id)}>Remove</Button> */}
-                  <Button variant="contained" sx={{backgroundColor: "red"}}>Remove</Button>
+                  <Button variant="contained" sx={{backgroundColor: "red"}} onClick= {()=>{deleteData(user._id);}}>Remove</Button>
                 </TableCell>
               </TableRow>
             ))}

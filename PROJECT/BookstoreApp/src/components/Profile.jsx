@@ -40,19 +40,19 @@ const Profile = () => {
       <Box
         component="form"
         sx={{
-          '& .MuiTextField-root': { m: 1, width: '40ch' },
+          '& .MuiTextField-root': { m: 1, width: '60ch' },
           backgroundColor: 'rgba(255, 255, 255, 0.8)',
           padding: 2,
           borderRadius: 3,
           boxShadow: 10,
-          maxWidth: '400px',
+          maxWidth: '1000px',
           textAlign: 'center', 
         }}
         noValidate
         autoComplete="off"
     >
       <h1 style={{ color: 'black' ,fontFamily: 'Lobster', alignItems: 'left' }}>Profile Details</h1>
-      <div style={{ width: '100%', maxWidth: '400px', marginBottom: '20px' }}>
+      <div style={{ width: '100%', maxWidth: '600px', marginBottom: '20px' }}>
         <TextField
           id="outlined-basic"
           label="Name"
