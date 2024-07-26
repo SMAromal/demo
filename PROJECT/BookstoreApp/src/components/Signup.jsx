@@ -1,43 +1,58 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Button, TextField, Checkbox, FormControlLabel, colors, Typography } from '@mui/material';
-import { Link,useLocation} from 'react-router-dom';
+import { Box, Button, TextField, Checkbox, FormControlLabel, Typography, CircularProgress } from '@mui/material';
+import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 const Signup = () => {
+  const [form, setForm] = useState({
+    Name: '',
+    Place: '',
+    Age: '',
+    Password: '',
+    Email: '',
+    phoneNumber: '',
+    Type: 'User'
+  });
+  const [loading, setLoading] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [error, setError] = useState('');
+  const location = useLocation();
 
-  const [form,setForm]=useState({
-    Name:'',
-    Place:'',
-    Age:'',
-    Password:'',
-    Email:'',
-    phoneNumber:''
-  })
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+  };
 
-  function valueCap(e){
-    setForm({...form,[e.target.name]:e.target.value})
-  }
+  const handleCheckboxChange = (e) => {
+    setTermsAccepted(e.target.checked);
+  };
 
-  function sendData(){
-    axios.post("http://localhost:4000/adduser",form).then((res)=>{
-      alert('User added sucessfully')
-    }).catch((error)=>{
-      console.log(error)
-    })
-  }
-
-  useEffect(()=>{
-    if(location.state!=null){
-      setForm({...form,
-        Name:location.state.val.Name,
-        Place:location.state.val.Place,
-        Age:location.state.val.Age,
-        Password:location.state.val.Password,
-        Email:location.state.val.Email,
-        phoneNumber:location.state.val.phoneNumber
-      })
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!termsAccepted) {
+      setError('You must agree to the terms and conditions');
+      return;
     }
-  })
+    setLoading(true);
+    setError('');
+    try {
+      await axios.post('http://localhost:4000/adduser', form);
+      alert('User added successfully');
+    } catch (error) {
+      setError('Error adding user');
+      console.error(error);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    if (location.state) {
+      setForm({
+        ...form,
+        ...location.state.val
+      });
+    }
+  }, [location.state]);
 
   return (
     <Box
@@ -46,109 +61,110 @@ const Signup = () => {
         backgroundImage: 'url(https://images.wallpaperscraft.com/image/single/books_library_shelves_138556_1920x1080.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        height: 'auto',
+        height: '150vh',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         padding: 4,
       }}
     >
-    <Box
-      component="form"
-      sx={{
-        '& .MuiTextField-root': { m: 1, width: '50ch' },
-        backgroundColor: 'rgba(255, 255, 255, 0.8)',
-        padding: 2,
-        borderRadius: 2,
-        backgroundSize: 'cover',
-        boxShadow: 10,
-        maxWidth: '600px',  
-        margin: 'auto',
-        
-      }}
-      noValidate
-      autoComplete="off"
-    >
-      <h1 style={{ color: 'black' ,fontFamily: 'Lobster' }}>Sign Up</h1>
-      <div>
+      <Box
+        component="form"
+        sx={{
+          '& .MuiTextField-root': { m: 1, width: '100%' },
+          backgroundColor: 'rgba(255, 255, 255, 0.9)',
+          padding: 4,
+          borderRadius: 3,
+          boxShadow: 3,
+          maxWidth: '500px',
+          width: '100%',
+        }}
+        noValidate
+        autoComplete="off"
+        onSubmit={handleSubmit}
+      >
+        <Typography variant="h4" gutterBottom align="center" sx={{ fontFamily: 'Lobster', color: '#333' }}>
+          Sign Up
+        </Typography>
         <TextField
           required
-          id="outlined-required"
           label="Name"
           value={form.Name}
           name="Name"
-          onChange={valueCap}
+          onChange={handleChange}
         />
-      </div>
-      <div>
         <TextField
-        required
-          id="outlined-required"
+          required
           label="Place"
           value={form.Place}
           name="Place"
-          onChange={valueCap}
+          onChange={handleChange}
         />
-      </div>
-      <div>
         <TextField
-        required
-          id="outlined-password-input"
+          required
           label="Age"
           value={form.Age}
           name="Age"
-          onChange={valueCap}
+          onChange={handleChange}
+          type="number"
         />
-      </div>
-      <div>
         <TextField
-        required
-          id="outlined-required"
+          required
           label="Set up a password!"
           type="password"
           value={form.Password}
           name="Password"
-          onChange={valueCap}
+          onChange={handleChange}
         />
-      </div>
-      <h4 style={{ color: 'black' ,fontFamily: 'Lobster'}}>Contact Details:</h4>
-      <div>
+        <Typography variant="h6" sx={{ mt: 2, color: '#333' }}>
+          Contact Details:
+        </Typography>
         <TextField
-        required
-          id="outlined-required"
+          required
           label="Email-id"
           type="email"
           value={form.Email}
           name="Email"
-          onChange={valueCap}
+          onChange={handleChange}
         />
-      </div>
-      <div>
         <TextField
-        required
-          id="outlined-required"
+          required
           label="Phone Number"
           type="tel"
           value={form.phoneNumber}
           name="phoneNumber"
-          onChange={valueCap}
+          onChange={handleChange}
         />
-      </div>
-      <div>
-        <Typography  sx={{ marginTop: 2,color:"black" }}>
+        <Typography sx={{ mt: 2, mb: 1, color: '#333' }}>
           Please read and accept our Terms and Conditions.
         </Typography>
-      </div>
-      <div style={{ color: 'black' }}>
         <FormControlLabel
-          control={<Checkbox name="terms" />}
+          sx={{color:'black'}}
+          control={<Checkbox checked={termsAccepted} onChange={handleCheckboxChange} />}
           label="I agree to the terms and conditions"
         />
-      </div>
-      <div>
-        <Link to={'/login'}><Button sx={{backgroundColor: "sandybrown"}}variant="contained" onClick={sendData}>Sign Up</Button></Link>
-      </div>
-    </Box>
+        {error && <Typography color="error" sx={{ mt: 2 }}>{error}</Typography>}
+        <Button
+          type="submit"
+          sx={{
+            backgroundColor: 'sandybrown',
+            color: 'white',
+            '&:hover': {
+              backgroundColor: 'darkorange',
+            },
+            width: '100%',
+            mt: 3,
+            py: 1.5,
+          }}
+          variant="contained"
+          disabled={loading}
+        >
+          {loading ? <CircularProgress size={24} sx={{ color: 'white' }} /> : 'Sign Up'}
+        </Button>
+        <Typography sx={{ mt: 2, textAlign: 'center',color:'black' }}>
+          Already have an account? <Link to="/login">Login</Link>
+        </Typography>
+      </Box>
     </Box>
   );
 };
