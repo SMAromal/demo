@@ -14,7 +14,7 @@ const NavBar = () => {
         <Link to={'/add'}><Button style={{ color: 'lightyellow',background: 'sandybrown'}}>Add</Button></Link>
         <Link to={'/userlist'}><Button style={{ color: 'lightyellow',background: 'sandybrown',margin:20 }}>User List</Button></Link>
         <Link to={'/booklist'}><Button style={{ color: 'lightyellow',background: 'sandybrown' ,marginRight:20}}>Book List</Button></Link>
-        <Link to={'/login'}><Button style={{ color: 'lightyellow',background: 'sandybrown' }}>Log Out</Button></Link>
+        <Link to={'/'}><Button style={{ color: 'lightyellow',background: 'sandybrown' }}>Log Out</Button></Link>
        
         </Toolbar>
       </AppBar>

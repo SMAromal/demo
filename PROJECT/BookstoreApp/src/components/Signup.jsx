@@ -3,16 +3,18 @@ import { Box, Button, TextField, Checkbox, FormControlLabel, Typography, Circula
 import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
+const initialFormState = {
+  Name: '',
+  Place: '',
+  Age: '',
+  Password: '',
+  Email: '',
+  phoneNumber: '',
+  Type: 'User'
+};
+
 const Signup = () => {
-  const [form, setForm] = useState({
-    Name: '',
-    Place: '',
-    Age: '',
-    Password: '',
-    Email: '',
-    phoneNumber: '',
-    Type: 'User'
-  });
+  const [form, setForm] = useState(initialFormState);
   const [loading, setLoading] = useState(false);
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [error, setError] = useState('');
@@ -38,6 +40,8 @@ const Signup = () => {
     try {
       await axios.post('http://localhost:4000/adduser', form);
       alert('User added successfully');
+      setForm(initialFormState); 
+      setTermsAccepted(false); 
     } catch (error) {
       setError('Error adding user');
       console.error(error);
@@ -139,7 +143,7 @@ const Signup = () => {
           Please read and accept our Terms and Conditions.
         </Typography>
         <FormControlLabel
-          sx={{color:'black'}}
+          sx={{ color: 'black' }}
           control={<Checkbox checked={termsAccepted} onChange={handleCheckboxChange} />}
           label="I agree to the terms and conditions"
         />
@@ -161,7 +165,7 @@ const Signup = () => {
         >
           {loading ? <CircularProgress size={24} sx={{ color: 'white' }} /> : 'Sign Up'}
         </Button>
-        <Typography sx={{ mt: 2, textAlign: 'center',color:'black' }}>
+        <Typography sx={{ mt: 2, textAlign: 'center', color: 'black' }}>
           Already have an account? <Link to="/login">Login</Link>
         </Typography>
       </Box>

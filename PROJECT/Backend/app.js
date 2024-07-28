@@ -45,6 +45,28 @@ app.get('/users', async (req, res) => {
     }
 });
 
+//GET: Books
+app.get('/books',async (req,res)=>{
+    try {
+        const datasave= await BookModel.find();
+        res.send(datasave)
+    } catch (error) {
+        res.send('Data not found')
+    }
+    
+})
+
+// GET : books form add books
+app.get('/bookh',async (req,res)=>{
+    try {
+        const datasave= await BookModel.find();
+        res.send(datasave)
+    } catch (error) {
+        res.send('Data not found')
+    }
+    
+})
+
 // DELETE: User
 app.delete('/userdel/:id', async (req, res) => {
     try {
@@ -68,9 +90,11 @@ app.post('/login', async (req, res) => {
       }
     } catch (error) {
       console.log(error);
-      res.status(500).json({ message: 'Error logging in' });
+      res.status(500).json({ message: 'Invalid credentials' });
     }
   });
+
+  
   
 
 app.listen(4000, () => {

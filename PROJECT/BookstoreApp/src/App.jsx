@@ -14,6 +14,7 @@ import Userlist from './components/Userlist'
 import Booklist from './components/Booklist'
 import Profile from './components/Profile'
 import Individual from './components/Individual'
+import HomePage from './components/HomePage'
 
 
 function App() {
@@ -28,7 +29,8 @@ function App() {
     <Routes>
     <Route path='/home' element={<Home/>}></Route>
     <Route path='/add' element={<Addbook/>}></Route>
-    <Route path='/' element={<Signup/>}></Route>
+    <Route path='/' element={<HomePage/>}></Route>
+    <Route path='/signup' element={<Signup/>}></Route>
     <Route path='/login' element={<Userlogin/>}></Route>
     <Route path='/userlist' element={<Userlist/>}></Route>
     <Route path='/booklist' element={<Booklist/>}></Route>

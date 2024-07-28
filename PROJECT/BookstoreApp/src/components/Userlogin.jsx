@@ -30,7 +30,7 @@ const Userlogin = () => {
       const response = await axios.post('http://localhost:4000/login', form);
       setLoading(false);
       if (response.data.Type === 'Admin') {
-        navigate('/userlist');
+        navigate('/booklist');
       } else if (response.data.Type === 'User') {
         navigate('/home');
       } else {
@@ -38,7 +38,7 @@ const Userlogin = () => {
       }
     } catch (error) {
       setLoading(false);
-      setError('Error logging in');
+      setError('Invalid Credentials !');
       console.error(error);
     }
   };
