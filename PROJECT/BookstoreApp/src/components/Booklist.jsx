@@ -80,7 +80,7 @@ const Booklist = () => {
                     variant="contained"
                     onClick={() => adminUpdate(book._id)}
                   >
-                    {book.rented ? 'Make Available' : 'Rent'}
+                    {book.rented ? 'Make Available' : 'Update'}
                   </Button>
                 </TableCell>
               </TableRow>

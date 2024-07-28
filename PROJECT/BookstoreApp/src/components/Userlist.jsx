@@ -40,7 +40,7 @@ const Userlist = () => {
         padding: 4,
       }}
     >
-      <Typography variant="h2" gutterBottom align="center" sx={{ fontFamily: 'Lobster', color: 'white', marginBottom: 4 }}>
+      <Typography variant="h2" gutterBottom align="center" sx={{ fontFamily: 'Lobster', color: 'white', textShadow: '2px 2px 4px rgba(0,0,0,0.6)',marginBottom: 4 }}>
         User List
       </Typography>
       <TableContainer component={Paper} sx={{ width: '80%', backgroundColor: 'rgba(255, 255, 255, 0.9)', borderRadius: 2, boxShadow: 3 }}>
